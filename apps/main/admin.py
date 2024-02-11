@@ -1,3 +1,14 @@
-from django.contrib import admin
+from atexit import register
 
-# Register your models here.
+from django.contrib import admin
+from .models import Contact
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'message')
+    list_display_links = ('name', 'email', 'message')
+    search_fields = ('name',)
+
+
+

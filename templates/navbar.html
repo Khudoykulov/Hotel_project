@@ -37,18 +37,18 @@
 
                             <div class="classynav">
                                 <ul id="nav">
-                                    <li class="active"><a href="index-2.html">Home</a></li>
+                                    <li class="active"><a href="{% url 'main:home' %}">Home</a></li>
                                     <li><a href="../room.html">Rooms</a></li>
                                     <li><a href="about.html">About Us</a></li>
                                     <li><a href="#">Pages</a>
                                         <ul class="dropdown">
-                                            <li><a href="index-2.html">- Home</a></li>
+                                            <li><a href="{% url 'main:home' %}">- Home</a></li>
                                             <li><a href="../room.html">- Rooms</a></li>
                                             <li><a href="../single-room.html">- Single Rooms</a></li>
                                             <li><a href="about.html">- About Us</a></li>
                                             <li><a href="../blog/blog.html">- Blog</a></li>
                                             <li><a href="../blog/single-blog.html">- Single Blog</a></li>
-                                            <li><a href="contact.html">- Contact</a></li>
+                                            <li><a href="{% url 'main:contact' %}">- Contact</a></li>
                                             <li><a href="#">- Dropdown</a>
                                                 <ul class="dropdown">
                                                     <li><a href="#">- Dropdown Item</a></li>
@@ -60,7 +60,7 @@
                                         </ul>
                                     </li>
                                     <li><a href="../blog/blog.html">News</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="{% url 'main:contact' %}">Contact</a></li>
                                 </ul>
 
                                 <div class="search-btn ml-4">
