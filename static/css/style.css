@@ -17,6 +17,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="your-class-prefix"] {
 */
+
  .icon_search, .icon_star, .icon_mail, .icon_phone {
 	font-family: 'ElegantIcons';
 	speak: none;
