@@ -25,3 +25,20 @@ class MyUserCreationForm(UserCreationForm):
             "name": "password2"
         })
 
+
+class MyAuthenticationForm(AuthenticationForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            "class": "form-control",
+            "id": "exampleFormControlInput1",
+            "placeholder": "username",
+            "name": "username"
+        })
+        self.fields['password'].widget.attrs.update({
+            "class": "form-control",
+            "id": "inputPassword",
+            "placeholder": "password",
+            "name": "password"
+        })
