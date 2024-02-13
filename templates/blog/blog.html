@@ -34,19 +34,19 @@
                              data-wow-delay="200ms">
 
                             <div class="post-thumbnail">
-                                <a href="#"><img src="{{ object.image.url }}" alt></a>
+                                <a href="{% url 'blog:blog_detail' object.slug %}"><img src="{{ object.image.url }}" alt></a>
                             </div>
 
                             <div class="post-content">
 
                                 <div class="post-meta">
-                                    <a href="#" class="post-author">{{ object.create_date|date:"F d, Y" }}</a>
-                                    <a href="#" class="post-tutorial">{{ object.author.name }}</a>
+                                    <a href="{% url 'blog:blog_detail' object.slug %}" class="post-author">{{ object.create_date|date:"F d, Y" }}</a>
+                                    <a href="{% url 'blog:blog_detail' object.slug %}" class="post-tutorial">{{ object.author.name }}</a>
                                 </div>
 
-                                <a href="#" class="post-title">{{ object.name }}</a>
+                                <a href="{% url 'blog:blog_detail' object.slug %}" class="post-title">{{ object.name }}</a>
                                 <p>{{ object.author.bio }}</p>
-                                <a href="#" class="btn continue-btn">Read More</a>
+                                <a href="{% url 'blog:blog_detail' object.slug %}" class="btn continue-btn">Read More</a>
                             </div>
                         </div>
                     {% endfor %}
@@ -92,8 +92,8 @@
                                 <div class="post-content">
 
                                     <div class="post-meta">
-                                        <a href="#" class="post-author">{{ object.create_date|date:"M d, Y" }}</a>
-                                        <a href="#" class="post-tutorial">{{ object.author.name }}</a>
+                                        <a href="{% url 'blog:blog_detail' object.slug %}" class="post-author">{{ object.create_date|date:"M d, Y" }}</a>
+                                        <a href="{% url 'blog:blog_detail' object.slug %}" class="post-tutorial">{{ object.author.name }}</a>
                                     </div>
                                     <a href="single-blog.html" class="post-title">{{ object.name }}</a>
                                 </div>
