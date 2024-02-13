@@ -1,8 +1,46 @@
 from django.contrib import admin
-from .models import BlogPost
+from .models import (
+     BlogPost,
+     Author,
+     Content,
+     # Category,
+     Tag,
+)
+
+
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    search_fields = ('name',)
+    list_display_links = ('id', 'name')
+
+
+class ContentAdminInline(admin.TabularInline):
+    model = Content
+    extra = 0
 
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('id', 'author', 'name', 'create_date', )
+    search_fields = ('name', 'tag', 'author')
+    list_display_links = ('id', 'author', 'name', 'create_date', )
+    readonly_fields = ('create_date', 'slug')
+    date_hierarchy = 'create_date'
+    filter_horizontal = ('tags',)
+    inlines = [ContentAdminInline,]
+
+
+# @admin.register(Category)
+# class CategoryAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'name')
+#     search_fields = ('name',)
+#     list_display_links = ('id', 'name')
+
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    search_fields = ('name',)
+    list_display_links = ('id', 'name')
 
