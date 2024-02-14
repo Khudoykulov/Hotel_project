@@ -278,29 +278,35 @@
         <div class="projects-slides owl-carousel">
 
             {#            ---------------------------------for#}
+            {% for Service in Services_all %}
 
-            <div class="single-project-slide active bg-img"
-                 style="background-image: url({% static 'img/bg-img/5.jpg' %});">
+                <div class="single-project-slide active bg-img"
+                     style="background-image: url({{ Service.image.url }});">
 
-                <div class="project-content">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
+                    <div class="project-content">
+                        <div class="text">
+                            <h6>{{ Service.category }}</h6>
+                            <h5>{{ Service.name }}</h5>
+                        </div>
+                    </div>
+
+                    <div class="hover-effects">
+                        <div class="text">
+                            <h6>{{ Service.category }}</h6>
+                            {% for content in Service.content.all %}
+                            	<p>{{ content.content|safe|slice:'200' }}...</p>
+                            {% endfor %}
+
+                            <h5>{{ Service.name }}</h5>
+
+                        </div>
+                        <a href="{% url 'services:services_list' %}" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right"
+                                                                            aria-hidden="true"></i></a>
                     </div>
                 </div>
 
-                <div class="hover-effects">
-                    <div class="text">
-                        <h6>Entertaiment</h6>
-                        <h5>Racing Bike</h5>
-                        <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and
-                            confident...</p>
-                    </div>
-                    <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right"
-                                                                        aria-hidden="true"></i></a>
-                </div>
-            </div>
 
+            {% endfor %}
             {#            ---------------------------for#}
 
         </div>

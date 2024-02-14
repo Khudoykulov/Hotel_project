@@ -8,6 +8,6 @@ from .views import (
 app_name = 'blog'
 
 urlpatterns = [
-    path('blog_list', BlogListView.as_view(), name='blog_list'),
-    path('blog_detail/<slug:slug>', blogdetail, name='blog_detail')
+    path('blog_list/', BlogListView.as_view(), name='blog_list'),
+    path('blog_detail/<slug:slug>/', blogdetail, name='blog_detail')
 ]

@@ -4,6 +4,7 @@ from django.views.generic import TemplateView, CreateView
 from .models import Contact, Services
 from apps.main.form import ContactForm
 from apps.blog.models import BlogPost
+from apps.services.models import ServicesPost
 
 
 class HomePageView(TemplateView):
@@ -13,6 +14,7 @@ class HomePageView(TemplateView):
         cnt = super().get_context_data(**kwargs)
         cnt['services'] = Services.objects.all()
         cnt['blog_list'] = BlogPost.objects.order_by('-id')[:3]
+        cnt['Services_all'] = ServicesPost.objects.order_by('-id')[:5]
         return cnt
 
 
