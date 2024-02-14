@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG') == '1'
+DEBUG = os.environ.get('DEBUG') == '1'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(",")
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(",")
 
 
 # Application definition
@@ -56,7 +56,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
-
+CKEDITOR_CONFIGS = {
+    "default": {
+        "versionCheck": False
+    }
+}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

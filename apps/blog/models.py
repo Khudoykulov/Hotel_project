@@ -13,13 +13,6 @@ class Tag(BaseModel):
         return self.name
 
 
-# class Category(BaseModel):
-#     name = models.CharField(max_length=123)
-#
-#     def __str__(self):
-#         return self.name
-
-
 class Author(BaseModel):
     name = models.CharField(max_length=123)
     image = models.ImageField(upload_to='author', null=True, blank=True)
@@ -33,8 +26,7 @@ class BlogPost(BaseModel):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='blog_author', default=1)
     name = models.CharField(max_length=123)
     image = models.ImageField(upload_to='media/',)
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='blog_category', null=True, blank=True)
-    tags = models.ManyToManyField(Tag, related_name='blog_tag', null=True, blank=True)
+    tags = models.ManyToManyField(Tag, related_name='blog_tag')
     slug = models.SlugField(unique=True,)
 
     def __str__(self):

@@ -17,3 +17,11 @@ class Contact(BaseModel):
     def __str__(self):
         return self.name
 
+
+class Partner(BaseModel):
+    name = models.CharField(max_length=123, null=True, blank=True)
+    image = models.ImageField(upload_to='partner/')
+
+    def __str__(self):
+        return self.name
+
