@@ -25,3 +25,11 @@ class Partner(BaseModel):
     def __str__(self):
         return self.name
 
+
+class Services(BaseModel):
+    name = models.CharField(max_length=123, null=True, blank=True)
+    image = models.ImageField(upload_to='services/', null=True)
+
+    def __str__(self):
+        return self.name
+

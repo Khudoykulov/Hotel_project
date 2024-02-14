@@ -1,7 +1,7 @@
 from atexit import register
 
 from django.contrib import admin
-from .models import Contact, Partner
+from .models import Contact, Partner, Services
 
 
 @admin.register(Contact)
@@ -12,6 +12,14 @@ class ContactAdmin(admin.ModelAdmin):
 
 
 @admin.register(Partner)
+class PartnerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'create_date',)
+    list_display_links = ('name', 'create_date',)
+    search_fields = ('name',)
+    date_hierarchy = 'create_date'
+
+
+@admin.register(Services)
 class PartnerAdmin(admin.ModelAdmin):
     list_display = ('name', 'create_date',)
     list_display_links = ('name', 'create_date',)

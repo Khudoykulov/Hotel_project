@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'apps.blog',
     'apps.main',
+    'apps.services'
 
 ]
 
