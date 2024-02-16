@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.db.models.signals import pre_save
 
+
 class Room(BaseModel):
     name = models.CharField(max_length=123)
     price = models.IntegerField(default=100)
@@ -35,25 +36,43 @@ class RoomService(BaseModel):
     image = models.ImageField(upload_to='rooms/service/')
 
 
-class PriceRoom(models.Model):
-    UNIT = (
-        (0, '0'),
-        (1, '01'),
-        (2, '02'),
-        (3, '03'),
-        (4, '04'),
-        (5, '05'),
-        (6, '06'),
-    )
-    price_min = models.IntegerField(default=0)
-    price_max = models.IntegerField()
+# class PriceRoom(models.Model):
+#     UNIT = (
+#         (0, '0'),
+#         (1, '01'),
+#         (2, '02'),
+#         (3, '03'),
+#         (4, '04'),
+#         (5, '05'),
+#         (6, '06'),
+#     )
+#     price_min = models.IntegerField(default=0)
+#     price_max = models.IntegerField()
+#     check_in = models.DateField()
+#     check_out = models.DateField()
+#     adults = models.IntegerField(choices=UNIT, default=2)
+#     children = models.IntegerField(choices=UNIT, default=2)
+#
+#     class Meta:
+#         abstract = True
+
+
+class Booking(BaseModel):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='booking')
+    # author = models.ForeignKey(auth.User, on_delete=models.SET_NULL, null=True)
     check_in = models.DateField()
     check_out = models.DateField()
-    adults = models.IntegerField(choices=UNIT, default=2)
-    children = models.IntegerField(choices=UNIT, default=2)
+    adults = models.IntegerField()
+    children = models.IntegerField()
+    price_min = models.IntegerField(default=0)
+    price_max = models.IntegerField()
 
-    class Meta:
-        abstract = True
+    def __str__(self):
+        return self.check_in
+
+    # @property
+    # def amount(self):
+    #     pass
 
 
 def blog_pre_save(sender, instance, *args, **kwargs):

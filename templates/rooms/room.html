@@ -30,12 +30,7 @@
                 <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
 
                     <div class="room-thumbnail">
-                        {% for image in object.room_image.all %}
-                        {% if room_image|slice:'0' == image.image.url %}
-                        <img src="{{ image.image.url }}" alt>
-                        	{% endif %}
-                        {% endfor %}
-                        
+                        <img src="{{ object.room_image.first.image.url }}" alt>
                     </div>
 
                     <div class="room-content">

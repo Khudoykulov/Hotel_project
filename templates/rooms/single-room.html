@@ -30,7 +30,7 @@
                                     {% for image in room.room_image.all %}
 
                                         <div class="carousel-item {% if image|slice:'0' %} active {% endif %}">
-                                            <img src="{{ image.image.url }}" class="d-block w-100" alt>
+{#                                            <img src="{{ image.image.url }}" class="d-block w-100" alt>#}
                                         </div>
                                     {% endfor %}
                                     {#                                <div class="carousel-item">#}
@@ -48,8 +48,9 @@
                             </div>
                             <ol class="carousel-indicators">
                                 {% for image in room.room_image.all %}
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="1" class="{% if room_image == image.url %} active {% endif %}">
-                                        <img src="{{ image.image.url }}" class="d-block w-100" alt>
+                                    <li data-target="#room-thumbnail--slide" data-slide-to="1"
+                                        class="{% if room_image == image.url %} active {% endif %}">
+{#                                        <img src="{{ image.image.url }}" class="d-block w-100" alt>#}
                                     </li>
                                 {% endfor %}
                                 {#                                <li data-target="#room-thumbnail--slide" data-slide-to="1">#}
