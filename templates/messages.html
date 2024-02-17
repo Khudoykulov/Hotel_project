@@ -1,0 +1,7 @@
+{% for message in messages %}
+    {% if message.tags == 'success' %}
+        <div class="message_success" id="django-messages">
+            <h3>{{ message }}</h3>
+        </div>
+    {% endif %}
+{% endfor %}
