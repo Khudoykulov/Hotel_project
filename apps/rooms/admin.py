@@ -18,6 +18,7 @@ class RoomAdmin(admin.ModelAdmin):
     search_fields = ('name', 'price', 'max_person')
     list_filter = ('name', 'price', 'max_person',)
     date_hierarchy = 'create_date'
+    readonly_fields = ('create_date', 'slug')
     list_display_links = ('name', 'price', 'create_date', 'size_a', 'size_b', 'bed', 'max_person')
     inlines = [ContentAdminInline, ImageAdminInline]
 

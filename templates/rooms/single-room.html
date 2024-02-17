@@ -3,13 +3,14 @@
 
 {% block content %}
 
-    <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/16.jpg);">
+    <div class="breadcrumb-area bg-img bg-overlay jarallax"
+         style="background-image: url({% static 'img/bg-img/16.jpg' %});">
         <div class="container h-100">
             <div class="row h-100 align-items-end">
                 <div class="col-12">
                     <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
-                        <h2 class="room-title">Room View Sea</h2>
-                        <h2 class="room-price">$180 <span>/ Per Night</span></h2>
+                        <h2 class="room-title">{{ room.name }}</h2>
+                        <h2 class="room-price">${{ room.price }} <span>/ Per Night</span></h2>
                     </div>
                 </div>
             </div>
@@ -28,9 +29,8 @@
                             <div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     {% for image in room.room_image.all %}
-
                                         <div class="carousel-item {% if image|slice:'0' %} active {% endif %}">
-{#                                            <img src="{{ image.image.url }}" class="d-block w-100" alt>#}
+                                            <img src="{{ image.image.url }}" class="d-block w-100" alt>
                                         </div>
                                     {% endfor %}
                                     {#                                <div class="carousel-item">#}
@@ -50,7 +50,7 @@
                                 {% for image in room.room_image.all %}
                                     <li data-target="#room-thumbnail--slide" data-slide-to="1"
                                         class="{% if room_image == image.url %} active {% endif %}">
-{#                                        <img src="{{ image.image.url }}" class="d-block w-100" alt>#}
+                                        <img src="{{ image.image.url }}" class="d-block w-100" alt>
                                     </li>
                                 {% endfor %}
                                 {#                                <li data-target="#room-thumbnail--slide" data-slide-to="1">#}
@@ -70,118 +70,25 @@
                     </div>
 
                     <div class="room-features-area d-flex flex-wrap mb-50">
-                        <h6>Size: <span>350-425sqf</span></h6>
-                        <h6>Capacity: <span>Max persion 5</span></h6>
-                        <h6>Bed: <span>King beds</span></h6>
-                        <h6>Services: <span>Wifi, television ...</span></h6>
+                        <h6>Size: <span>{{ room.size_a }}-{{ room.size_b }} sqf</span></h6>
+                        <h6>Capacity: <span>Max persion {{ room.max_person }}</span></h6>
+                        <h6>Bed: <span>{{ room.bed }}</span></h6>
+                        <h6>Services: <span>{{ room.services_room.first.name }}, <br>{{ room.services_room.last.name }}...</span>
+                        </h6>
                     </div>
-                    <p>If you live in New York City or travel to and from New York City a lot, you know all about the
-                        traffic there. Getting places is often next to impossible, even with the gazillion yellow cabs.
-                        If you’re like me you often look with envy at those shiny limousines with their unformed drivers
-                        and wish you could sit in one. Well, you can. New York limo service is more affordable than you
-                        think, whether it’s for Newark airport transportation, LaGuardia airport transportation, or to
-                        drive wherever you wish to go.</p>
-                    <ul>
-                        <li><i class="fa fa-check"></i> Mauris molestie lectus in irdiet auctor.</li>
-                        <li><i class="fa fa-check"></i> Dictum purus at blandit molestie.</li>
-                        <li><i class="fa fa-check"></i> Neque non fermentum suscipit.</li>
-                        <li><i class="fa fa-check"></i> Donec id dui ac massa malesuada.</li>
-                        <li><i class="fa fa-check"></i> In sit amet sapien quis orci maximus.</li>
-                        <li><i class="fa fa-check"></i> Vestibulum rutrum diam vel eros tristique.</li>
-                    </ul>
-                    <p>Every time I hail a cab in New York City or wait for one at the airports, I hope I’ll be lucky
-                        enough to get one that’s halfway decent and that the driver actually speaks English. I have
-                        spent many anxious moments wondering if I ever get to my destination. Or whether I’d get ripped
-                        off. Even if all goes well, I can’t say I can remember many rides in New York cabs that were
-                        very pleasant. And given how much they cost by now, going with a limo makes ever more sense.</p>
+                    {% for content in room.content_room.all %}
+                        <p>{% if not content.chek %}
+                            {{ content.content|safe }}
+                        {% endif %} </p>
+                        {% if content.chek %}
+                            <ul>
+                                <li><i class="fa fa-check"></i>{{ content.content|safe }}</li>
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-
-                <div class="room-service mb-50">
-                    <h4>Room Services</h4>
-                    <ul>
-                        <li><img src="img/core-img/icon1.png" alt> Air Conditioning</li>
-                        <li><img src="img/core-img/icon2.png" alt> Free drinks</li>
-                        <li><img src="img/core-img/icon3.png" alt> Restaurant quality</li>
-                        <li><img src="img/core-img/icon4.png" alt> Cable TV</li>
-                        <li><img src="img/core-img/icon5.png" alt> Unlimited Wifi</li>
-                        <li><img src="img/core-img/icon6.png" alt> Service 24/24</li>
-                    </ul>
-                </div>
-
-                <div class="room-review-area mb-100">
-                    <h4>Room Review</h4>
-
-                    <div class="single-room-review-area d-flex align-items-center">
-                        <div class="reviwer-thumbnail">
-                            <img src="img/bg-img/53.jpg" alt>
-                        </div>
-                        <div class="reviwer-content">
-                            <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                <div class="reviwer-title">
-                                    <span>27 Aug 2019</span>
-                                    <h6>Brandon Kelley</h6>
-                                </div>
-                                <div class="reviwer-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-                                velit, sed quia non numquam eius modi tempora.</p>
-                        </div>
-                    </div>
-
-                    <div class="single-room-review-area d-flex align-items-center">
-                        <div class="reviwer-thumbnail">
-                            <img src="img/bg-img/54.jpg" alt>
-                        </div>
-                        <div class="reviwer-content">
-                            <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                <div class="reviwer-title">
-                                    <span>27 Aug 2019</span>
-                                    <h6>Sounron Masha</h6>
-                                </div>
-                                <div class="reviwer-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-                                velit, sed quia non numquam eius modi tempora.</p>
-                        </div>
-                    </div>
-
-                    <div class="single-room-review-area d-flex align-items-center">
-                        <div class="reviwer-thumbnail">
-                            <img src="img/bg-img/55.jpg" alt>
-                        </div>
-                        <div class="reviwer-content">
-                            <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                <div class="reviwer-title">
-                                    <span>27 Aug 2019</span>
-                                    <h6>Amada Lyly</h6>
-                                </div>
-                                <div class="reviwer-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-                                velit, sed quia non numquam eius modi tempora.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-4">
+            
+                <div class="col-12 col-lg-4">
 
                 <div class="hotel-reservation--area mb-100">
                     <form action="#" method="post">
@@ -245,51 +152,75 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
-    </div>
 
+                <div class="room-service mb-50">
+                    <h4>Room Services</h4>
+                    <ul>
+                        {% for service in room.services_room.all %}
+                        	<li><img src="{{ service.image.url }}" alt> {{ service.name }}</li>
+                        {% endfor %}
 
-    <section class="roberto-cta-area">
-        <div class="container">
-            <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/1.jpg);">
-                <div class="row align-items-center">
-                    <div class="col-12 col-md-7">
-                        <div class="cta-text mb-50">
-                            <h2>Contact us now!</h2>
-                            <h6>Contact (+12) 345-678-9999 to book directly or for advice</h6>
+                    </ul>
+                </div>
+
+                <div class="room-review-area mb-100">
+                    <h4>Room Review</h4>
+
+                    <div class="single-room-review-area d-flex align-items-center">
+                        <div class="reviwer-thumbnail">
+                            <img src="{% static 'img/bg-img/53.jpg' %}" alt>
+                        </div>
+                        <div class="reviwer-content">
+                            <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
+                                <div class="reviwer-title">
+                                    <span>27 Aug 2019</span>
+                                    <h6>Brandon Kelley</h6>
+                                </div>
+                                <div class="reviwer-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+                                velit, sed quia non numquam eius modi tempora.</p>
                         </div>
                     </div>
-                    <div class="col-12 col-md-5 text-right">
-                        <a href="#" class="btn roberto-btn mb-50">Contact Now</a>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            
+            <div class="roberto-contact-form mt-80 mb-100">
+                        <h2>Leave A Comment</h2>
 
-
-    <div class="partner-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="partner-logo-content d-flex align-items-center justify-content-between wow fadeInUp"
-                         data-wow-delay="300ms">
-
-                        <a href="#" class="partner-logo"><img src="img/core-img/p1.png" alt></a>
-
-                        <a href="#" class="partner-logo"><img src="img/core-img/p2.png" alt></a>
-
-                        <a href="#" class="partner-logo"><img src="img/core-img/p3.png" alt></a>
-
-                        <a href="#" class="partner-logo"><img src="img/core-img/p4.png" alt></a>
-
-                        <a href="#" class="partner-logo"><img src="img/core-img/p5.png" alt></a>
+                        <form action="#" method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="text" name="message-name" class="form-control mb-30"
+                                           placeholder="Your Name">
+                                </div>
+                                <div class="col-12">
+                                    <input type="email" name="message-email" class="form-control mb-30"
+                                           placeholder="Email">
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" name="website" class="form-control mb-30" placeholder="Websites">
+                                </div>
+                                <div class="col-12">
+                                <textarea name="message" class="form-control mb-30"
+                                          placeholder="Start the discussion..."></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn roberto-btn btn-3 mt-15">Post Comment</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </div>
             </div>
+
         </div>
     </div>
+
 
 {% endblock %}
 
