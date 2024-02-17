@@ -38,24 +38,23 @@
                                 <ul id="nav">
                                     <li class="active"><a href="{% url 'main:home' %}">Home</a></li>
                                     <li><a href="{% url 'rooms:rooms_list' %}">Rooms</a></li>
-                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="{% url 'main:about' %}">About Us</a></li>
                                     <li><a href="#">Pages</a>
                                         <ul class="dropdown">
                                             <li><a href="{% url 'main:home' %}">- Home</a></li>
-                                            <li><a href="../room.html">- Rooms</a></li>
-                                            <li><a href="../single-room.html">- Single Rooms</a></li>
-                                            <li><a href="about.html">- About Us</a></li>
+                                            <li><a href="{% url 'rooms:rooms_list' %}">- Rooms</a></li>
+                                            <li><a href="{% url 'main:about' %}">- About Us</a></li>
                                             <li><a href="{% url 'blog:blog_list' %}">- Blog_list</a></li>
                                             <li><a href="{% url 'services:services_list' %}">- Services</a></li>
                                             <li><a href="{% url 'main:contact' %}">- Contact</a></li>
-                                            <li><a href="#">- Dropdown</a>
-                                                <ul class="dropdown">
-                                                    <li><a href="#">- Dropdown Item</a></li>
-                                                    <li><a href="#">- Dropdown Item</a></li>
-                                                    <li><a href="#">- Dropdown Item</a></li>
-                                                    <li><a href="#">- Dropdown Item</a></li>
-                                                </ul>
-                                            </li>
+{#                                            <li><a href="#">- Dropdown</a>#}
+{#                                                <ul class="dropdown">#}
+{#                                                    <li><a href="#">- Dropdown Item</a></li>#}
+{#                                                    <li><a href="#">- Dropdown Item</a></li>#}
+{#                                                    <li><a href="#">- Dropdown Item</a></li>#}
+{#                                                    <li><a href="#">- Dropdown Item</a></li>#}
+{#                                                </ul>#}
+{#                                            </li>#}
                                         </ul>
                                     </li>
 {#                                    <li><a href="{% url 'account:register' %}">Se</a></li>#}

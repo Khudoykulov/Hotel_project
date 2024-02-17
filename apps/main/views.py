@@ -5,6 +5,7 @@ from .models import Contact, Services
 from apps.main.form import ContactForm
 from apps.blog.models import BlogPost
 from apps.services.models import ServicesPost
+from apps.rooms.models import Room
 
 
 class HomePageView(TemplateView):
@@ -22,5 +23,13 @@ class ContactView(CreateView):
     form_class = ContactForm
     model = Contact
     success_url = reverse_lazy('main:contact')
+
+
+class AboutView(TemplateView):
+    def get_context_data(self, **kwargs):
+        cnt = super(AboutView, self).get_context_data(**kwargs)
+        cnt['room_3'] = Room.objects.order_by('-id')[:3]
+        return cnt
+    template_name = 'main/about.html'
 
 
