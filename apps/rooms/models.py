@@ -58,17 +58,17 @@ class RoomService(BaseModel):
 
 
 class Booking(BaseModel):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='booking')
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='rooms_booking')
     # author = models.ForeignKey(auth.User, on_delete=models.SET_NULL, null=True)
-    check_in = models.DateField()
-    check_out = models.DateField()
-    adults = models.IntegerField()
-    children = models.IntegerField()
-    price_min = models.IntegerField(default=0)
-    price_max = models.IntegerField()
+    check_in = models.DateField(null=True, blank=True)
+    check_out = models.DateField(null=True, blank=True)
+    adults = models.IntegerField(null=True, blank=True)
+    children = models.IntegerField(null=True, blank=True)
+    price_min = models.IntegerField(default=0, null=True, blank=True)
+    price_max = models.IntegerField(default=3000, null=True, blank=True)
 
-    def __str__(self):
-        return self.check_in
+    # def __str__(self):
+    #     return self.room
 
     # @property
     # def amount(self):

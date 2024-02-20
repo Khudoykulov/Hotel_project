@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Room, RoomService, RoomContent, Image
+from .models import Room, RoomService, RoomContent, Image, Booking
 
 
 class ContentAdminInline(admin.TabularInline):
@@ -28,6 +28,16 @@ class RoomService(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
     list_display_links = ('name',)
+
+
+@admin.register(Booking)
+class Booking(admin.ModelAdmin):
+    fields = ('room', 'check_in', 'check_out',)
+    list_display = ('room', 'check_in', 'check_out',)
+    search_fields = ('price_min', 'price_max',)
+    list_display_links = ('room', 'check_in', 'check_out',)
+
+
 
 
 
