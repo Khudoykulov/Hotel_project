@@ -14,13 +14,13 @@ class RoomForm(forms.ModelForm):
             'class': 'input-small form-control',
             'placeholder': 'Check In',
             'name': 'checkInDate',
-            'id': 'checkInDate'
+            'id': 'checkInDate',
         })
         self.fields['check_out'].widget.attrs.update({
             'class': 'input-small form-control',
             'placeholder': 'Check Out',
             'name': 'checkOutDate',
-            'id': 'check_outDate'
+            'id': 'checkOutDate'
         })
         self.fields['adults'].widget.attrs.update({
             'class': 'form-control',

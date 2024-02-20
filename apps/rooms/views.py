@@ -30,16 +30,13 @@ from .form import RoomForm
     # template_name = 'rooms/room.html'
 
 def room_list(request):
-    # form = RoomForm()
-    check_in = request.GET.get('checkInDate')
-    check_out = request.GET.get('checkOutDate')
+    check_in = request.GET.get('checkin-date')
+    check_out = request.GET.get('checkout-date')
     rooms = Room.objects.all()
-    # if check_in:
-    #     rooms = rooms.filter(rooms_booking__check_in__gte=check_in)
-    #     print('............................................')
+    if check_in and check_out:
+        rooms = rooms.filter(rooms_booking__check_in__gte=check_in, rooms_booking__check_out__lte=check_out)
     cnt = {
         'object_list': rooms,
-        # 'form': form
     }
     return render(request, 'rooms/room.html', cnt)
 
@@ -48,7 +45,7 @@ def room_detail(request, slug):
     room = get_object_or_404(Room, slug=slug)
     form = RoomForm()
     if request.method == 'POST':
-        form = RoomForm(request.POST, files=request.FILES)
+        form = RoomForm(request.POST,)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.room = room
