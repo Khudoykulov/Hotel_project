@@ -1,71 +1,56 @@
-{#{% extends 'base.html' %}#}
-{#{% load static %}#}
-{##}
-{##}
-{#{% block content %}#}
-{#    <div class="breadcrumb-area contact-breadcrumb bg-img bg-overlay jarallax"#}
-{#         style="background-image: url({% static 'img/bg-img/18.jpg' %});">#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <div class="col-12">#}
-{#                    <div class="breadcrumb-content text-center mt-100">#}
-{#                        <h2 class="page-title">Register</h2>#}
-{#                        <nav aria-label="breadcrumb">#}
-{#                            <ol class="breadcrumb justify-content-center">#}
-{#                                <li class="breadcrumb-item"><a href="{% url 'main:home' %}">Home</a></li>#}
-{#                                <li class="breadcrumb-item active" aria-current="page">Register</li>#}
-{#                            </ol>#}
-{#                        </nav>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#    <div class="home">#}
-{#        <div class="home_container d-flex flex-column align-items-center justify-content-center">#}
-{#            <div class="home_content">#}
-{#                <div class="home_title"><h1>Register Page</h1></div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{##}
-{#    <div class="row justify-content-md-center">#}
-{#        <div class="col-md-6">#}
-{#            <form method="post">#}
-{#                {% csrf_token %}#}
-{#                <div class="mb-3 mt-50">#}
-{#                    <label for="exampleFormControlInput1" class="form-label">Username</label>#}
-{#                    <div class="text-danger">{{ form.username.errors }}</div>#}
-{#                        {{ form.username }}#}
-{#                    <div id="passwordHelpBlock" class="form-text text-secondary">#}
-{#                        {{ form.username.help_text }}#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="mb-3">#}
-{#                    <label for="inputPassword1" class="form-label">Password</label>#}
-{#                    <div class="text-danger">{{ form.password1.errors }}</div>#}
-{#                    {{ form.password1 }}#}
-{#                    <div id="passwordHelpBlock" class="form-text">#}
-{#                        {{ form.password1.help_text }}#}
-{#                    </div>#}
-{##}
-{#                    <label for="inputPassword2" class="form-label mt-3">Confirm Password</label>#}
-{#                    <div class="text-danger">{{ form.password2.errors }}</div>#}
-{#                    {{ form.password2 }}#}
-{#                    <div id="passwordHelpBlock" class="form-text d-grid">#}
-{#                        {{ form.password2.help_text }}#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="mt-3 d-grid gap-2 col-6 mx-auto">#}
-{#                    <button class="btn " type="submit">Register</button>#}
-{#                    <a class="btn btn-secondary" href="/">Go home</a>#}
-{#                </div>#}
-{#                <div class="mt-3 mb-50 d-grid gap-4 col-6 mx-auto">#}
-{#                    <p>If you have an account already <a href="{% url 'account:login' %}">login</a>.</p>#}
-{#                </div>#}
-{#            </form>#}
-{#        </div>#}
-{#    </div>#}
-{#{% endblock %}#}
-{##}
-{##}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="breadcrumb-area bg-img bg-overlay jarallax"
+         style="background-image: url({% static 'img/core-img/fotolia_900x600_10-1200x530.jpg' %});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcrumb-content text-center">
+                        <h2 class="page-title">Register</h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a href="{% url 'main:home' %}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Register</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-md-center bg-white py-5">
+        <div class="col-md-6 mt-15">
+            <div style="" class="container">
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <label for="Name">Name</label>
+                        {{ form.username }}
+                    </div>
+
+                    <div class="custom-file breadcrumb ">
+                        {{ form.image }}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="exampleInputPassword1">Password</label>
+                        {{ form.password1 }}
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="Confirm password">Password</label>
+                        {{ form.password2 }}
+                    </div>
+                    <div class="justify-content-between d-flex">
+                        <div class="mt-2">
+                            <span>If you have an account <a href="{% url "account:login" %}"> Login</a></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

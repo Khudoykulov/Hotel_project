@@ -62,7 +62,6 @@
 
                 <div class="hotel-reservation--area mb-100">
                     <form action="{% url 'rooms:rooms_list' %}"  method="get" >
-                        {% csrf_token %}
                         <div class="form-group mb-30">
                             <label for="checkInDate">Date</label>
                             <div class="input-daterange" id="datepicker">

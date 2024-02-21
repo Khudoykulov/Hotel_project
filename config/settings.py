@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'apps.blog',
     'apps.main',
     'apps.services',
-    'apps.rooms'
+    'apps.rooms',
+    'apps.account'
 
 ]
 
