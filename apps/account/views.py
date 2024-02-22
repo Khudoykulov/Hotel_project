@@ -13,21 +13,21 @@ class RegisterView(View):
     template_name = 'account/register.html'
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class()
+        form = USerRegister()
         context = {
             'form': form
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = USerRegister(request.POST, files=request.FILES)
+        form = USerRegister(data=request.POST, files=request.FILES)
         if form.is_valid():
             user = form.save()
-            print('...........................................................................')
+            print('...............................................................................')
             if request.FILES:
                 Profile.objects.create(user_id=user.id, picture=request.FILES.get('image'))
                 messages.success(request, 'Successfully registered')
-        return redirect('account:login')
+        return redirect(reverse_lazy('account:login'))
 
 
 class LoginView(TemplateView):

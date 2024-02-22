@@ -70,7 +70,7 @@
                             <div class="newsletter-form">
                                 <h5>Newsletter</h5>
                                 <p>Subscribe our newsletter gor get notification new updates.</p>
-                                <form action="#" method="post">
+                                <form  method="post">
                                     <input type="email" name="nl-email" id="nlEmail" class="form-control"
                                            placeholder="Enter your email...">
                                     <button type="submit" class="btn roberto-btn w-100">Subscribe</button>
@@ -106,7 +106,7 @@
 
                             <ul class="popular-tags">
                                 {% for tag in tags %}
-                                <li><a href="#">{{ tag.name }},</a></li>
+                                <li><a href="{% url 'blog:blog_list' %}?tag={{ tag.name }}">{{ tag.name }},</a></li>
                                 {% endfor %}
                             </ul>
                         </div>

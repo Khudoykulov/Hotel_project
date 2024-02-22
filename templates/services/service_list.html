@@ -116,7 +116,7 @@
 
                             <ul class="popular-tags">
                                 {% for category in categories %}
-                                    <li><a href="#">{{ category.name }},</a></li>
+                                    <li><a href="{% url 'services:services_list' %}?category={{ category.name }}">{{ category.name }},</a></li>
                                 {% endfor %}
                             </ul>
                         </div>

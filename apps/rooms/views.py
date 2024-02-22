@@ -1,40 +1,24 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, CreateView
-
+from django.db.models import Q
 from apps.rooms.models import Room, Image, Booking
 from .form import RoomForm
 
 
-# class RoomListView(CreateView):
-#     form_class = RoomForm
-#     model = Booking
-#
-#     def get_context_data(self, **kwargs):
-#         cnt = super().get_context_data(**kwargs)
-#         cnt['object_list'] = Room.objects.all()
-#         return cnt
-#
-#     def get(self, request, *args, **kwargs):
-#         check_in = request.GET.get('checkInDate')
-#         check_out = request.GET.get('checkOutDate')
-        # adults = request.GET.get('adults')
-        # children = request.GET.get('children')
-        # print('dssss..............')
-        # if check_in or check_out:
-        #     object_list = Room.objects.filter(booking__check_in__gte=check_in, booking__check_out__lte=check_out)
-        #     print('ds..............')
-            # cnt = super().get_context_data(**kwargs)
-            # cnt['object_list'] = object_list
-            # return cnt
-
-    # template_name = 'rooms/room.html'
-
 def room_list(request):
     check_in = request.GET.get('checkin-date')
     check_out = request.GET.get('checkout-date')
+    max_adults = request.GET.get('adults')
+    max_children = request.GET.get('children')
+    price = request.GET.get('price')
     rooms = Room.objects.all()
     if check_in and check_out:
-        rooms = rooms.filter(rooms_booking__check_in__gte=check_in, rooms_booking__check_out__lte=check_out)
+        rooms = rooms.filter(~Q(rooms_booking__check_in__lte=check_out) | ~Q(rooms_booking__check_out__gte=check_in))
+        if int(max_adults) != 0 or int(max_children) != 0:
+            rooms_max_person = rooms.filter(Q(max_person=int(max_adults)+int(max_children)))
+            rooms = rooms.intersection(rooms_max_person)
+        # if int(price) != 0:
+
     cnt = {
         'object_list': rooms,
     }

@@ -14,6 +14,7 @@ class Room(BaseModel):
     size_b = models.IntegerField()
     bed = models.CharField(max_length=123, null=True, blank=True)
     slug = models.SlugField(unique=True, null=True, blank=True)
+    # room_number1 = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -36,30 +37,8 @@ class RoomService(BaseModel):
     image = models.ImageField(upload_to='rooms/service/')
 
 
-# class PriceRoom(models.Model):
-#     UNIT = (
-#         (0, '0'),
-#         (1, '01'),
-#         (2, '02'),
-#         (3, '03'),
-#         (4, '04'),
-#         (5, '05'),
-#         (6, '06'),
-#     )
-#     price_min = models.IntegerField(default=0)
-#     price_max = models.IntegerField()
-#     check_in = models.DateField()
-#     check_out = models.DateField()
-#     adults = models.IntegerField(choices=UNIT, default=2)
-#     children = models.IntegerField(choices=UNIT, default=2)
-#
-#     class Meta:
-#         abstract = True
-
-
 class Booking(BaseModel):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='rooms_booking')
-    # author = models.ForeignKey(auth.User, on_delete=models.SET_NULL, null=True)
     check_in = models.DateField(null=True, blank=True)
     check_out = models.DateField(null=True, blank=True)
     adults = models.IntegerField(null=True, blank=True)
@@ -67,8 +46,8 @@ class Booking(BaseModel):
     price_min = models.IntegerField(default=0, null=True, blank=True)
     price_max = models.IntegerField(default=3000, null=True, blank=True)
 
-    # def __str__(self):
-    #     return self.room
+    def __str__(self):
+        return self.room.name
 
     # @property
     # def amount(self):

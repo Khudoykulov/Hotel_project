@@ -54,7 +54,7 @@
                     <div class="post-author-area d-flex align-items-center justify-content-between mb-50">
                         <ul class="popular-tags">
                             {% for tag in blog.tags.all %}
-                            	<li><a href="#">{{ tag.name }},</a></li>
+                            	<li><a href="{% url 'blog:blog_list' %}?tag={{ tag.name }}">{{ tag.name }},</a></li>
                             {% endfor %}
                         </ul>
 
@@ -203,7 +203,7 @@
 
                             <ul class="popular-tags">
                                 {% for tag in tags %}
-                                	<li><a href="#">{{ tag.name }},</a></li>
+                                	<li><a href="{% url 'blog:blog_list' %}?tag={{ tag.name }}">{{ tag.name }},</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
