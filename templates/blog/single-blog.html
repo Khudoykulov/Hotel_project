@@ -54,103 +54,92 @@
                     <div class="post-author-area d-flex align-items-center justify-content-between mb-50">
                         <ul class="popular-tags">
                             {% for tag in blog.tags.all %}
-                            	<li><a href="{% url 'blog:blog_list' %}?tag={{ tag.name }}">{{ tag.name }},</a></li>
+                                <li><a href="{% url 'blog:blog_list' %}?tag={{ tag.name }}">{{ tag.name }},</a></li>
                             {% endfor %}
                         </ul>
 
                         <div class="author-social-info d-flex align-items-center">
                             <p>Share:</p>
-                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-facebook"
+                                                                                        aria-hidden="true"></i></a>
+                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-twitter"
+                                                                                        aria-hidden="true"></i></a>
+                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-google-plus"
+                                                                                        aria-hidden="true"></i></a>
+                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-linkedin"
+                                                                                        aria-hidden="true"></i></a>
+                            <a target="_blank" href="https://github.com/Khudoykulov"><i class="fa fa-envelope"
+                                                                                        aria-hidden="true"></i></a>
                         </div>
                     </div>
 
                     <div class="comment_area mb-50 clearfix">
-                        <h2>02 Comments</h2>
+                        <h2>{{ blog.comments.count }} Comments</h2>
                         <ol>
+                            {% for comment in comments.all|dictsortreversed:'id' %}
+                                {% if not comment.top_level_comment_id %}
+                                    <li class="single_comment_area" id="comment-{{ comment.id }}">
 
-                            <li class="single_comment_area">
+                                    <div class="comment-content d-flex">
 
-                                <div class="comment-content d-flex">
+                                        <div class="comment-author">
+                                            <img src="
 
-                                    <div class="comment-author">
-                                        <img src="img/bg-img/40.jpg" alt="author">
+                                                    {% if request.user.is_authenticated and request.user.image%}{{ request.user.image.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
+                                                 alt="Image placeholder">
+                                        </div>
+
+                                        <div class="comment-meta">
+                                            <a href="#"
+                                               class="post-date">{{ comment.created_date|date:"F d, Y \a\t h:i a" }}</a>
+                                            <h5>{{ comment.name }}</h5>
+                                            <p>{{ comment.message }}</p>
+                                            <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
+                                        </div>
                                     </div>
-
-                                    <div class="comment-meta">
-                                        <a href="#" class="post-date">27 Aug 2016</a>
-                                        <h5>Brandon Kelley</h5>
-                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                            adipisci velit, sed quia non numquam eius modi.</p>
-                                        <a href="#" class="like">Like</a>
-                                        <a href="#" class="reply">Reply</a>
-                                    </div>
-                                </div>
+                                {% endif %}
+                            {% for children in comment.children %}
                                 <ol class="children">
-                                    <li class="single_comment_area">
+                                    <li class="single_comment_area" id="{{ children.id }}">
 
                                         <div class="comment-content d-flex">
 
                                             <div class="comment-author">
-                                                <img src="img/bg-img/41.jpg" alt="author">
+                                                <img src="
+                                                        {% if request.user.is_authenticated and request.user.image %}{{ request.user.image.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
+                                                     alt="Image placeholder">
                                             </div>
-
-                                            <div class="comment-meta">
-                                                <a href="#" class="post-date">27 Aug 2018</a>
-                                                <h5>John Doe</h5>
-                                                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-                                                    consectetu adipisci velit, sed quia non numquam eius modi</p>
-                                                <a href="#" class="like">Like</a>
-                                                <a href="#" class="reply">Reply</a>
-                                            </div>
+                                        <div class="comment-meta">
+                                            <a href="#"
+                                               class="post-date">{{ children.created_date|date:"F d, Y \a\t h:i a" }}</a>
+                                            <h5>{{ children.name }}</h5>
+                                            <p>{{ children.message }}</p>
+                                            <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
+                                        </div>
                                         </div>
                                     </li>
                                 </ol>
+                            {% endfor %}
                             </li>
-
-                            <li class="single_comment_area">
-
-                                <div class="comment-content d-flex">
-
-                                    <div class="comment-author">
-                                        <img src="img/bg-img/42.jpg" alt="author">
-                                    </div>
-
-                                    <div class="comment-meta">
-                                        <a href="#" class="post-date">27 Aug 2018</a>
-                                        <h5>Lander Tea</h5>
-                                        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetu
-                                            adipisci velit, sed quia non numquam eius modi</p>
-                                        <a href="#" class="like">Like</a>
-                                        <a href="#" class="reply">Reply</a>
-                                    </div>
-                                </div>
-                            </li>
+                            {% endfor %}
                         </ol>
                     </div>
 
                     <div class="roberto-contact-form mt-80 mb-100">
                         <h2>Leave A Comment</h2>
 
-                        <form action="#" method="post">
+                        <form method="post" id="form_id_comment">
+                            {% csrf_token %}
                             <div class="row">
                                 <div class="col-12">
-                                    <input type="text" name="message-name" class="form-control mb-30"
-                                           placeholder="Your Name">
+{#                                    <input type="text" name="message-name" class="form-control mb-30"#}
+{#                                           placeholder="Your Name">#}
+                                    {{ form.name }}
                                 </div>
                                 <div class="col-12">
-                                    <input type="email" name="message-email" class="form-control mb-30"
-                                           placeholder="Email">
-                                </div>
-                                <div class="col-12">
-                                    <input type="text" name="website" class="form-control mb-30" placeholder="Websites">
-                                </div>
-                                <div class="col-12">
-                                <textarea name="message" class="form-control mb-30"
-                                          placeholder="Start the discussion..."></textarea>
+{#                                <textarea name="message" class="form-control mb-30"#}
+{#                                          placeholder="Start the discussion..."></textarea>#}
+                                    {{ form.message }}
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn roberto-btn btn-3 mt-15">Post Comment</button>
@@ -163,39 +152,31 @@
                     <div class="roberto-sidebar-area pl-md-4">
 
                         <div class="single-widget-area mb-100">
-                            <div class="newsletter-form">
-                                <h5>Newsletter</h5>
-                                <p>Subscribe our newsletter gor get notification new updates.</p>
-                                <form action="#" method="post">
-                                    <input type="email" name="nl-email" id="nlEmail" class="form-control"
-                                           placeholder="Enter your email...">
-                                    <button type="submit" class="btn roberto-btn w-100">Subscribe</button>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="single-widget-area mb-100">
                             <h4 class="widget-title mb-30">Recent News</h4>
-                                {% for blog in blogs %}
-                                
-                            <div class="single-recent-post d-flex">
+                            {% for blog in blogs %}
 
-                                <div class="post-thumb">
-                                    <a href="{% url 'blog:blog_detail' blog.slug %}"><img src="{{ blog.image.url }}" alt></a>
-                                </div>
+                                <div class="single-recent-post d-flex">
 
-                                <div class="post-content">
-
-                                    <div class="post-meta">
-                                        <a href="{% url 'blog:blog_detail' blog.slug %}" class="post-author">{{ blog.create_date|date:"M d, Y" }}</a>
-                                        <a href="{% url 'blog:blog_detail' blog.slug %}" class="post-tutorial">{{ blog.author.name }}</a>
+                                    <div class="post-thumb">
+                                        <a href="{% url 'blog:blog_detail' blog.slug %}"><img src="{{ blog.image.url }}"
+                                                                                              alt></a>
                                     </div>
-                                    <a href="{% url 'blog:blog_detail' blog.slug %}" class="post-title">{{ blog.name|slice:'70' }}...</a>
+
+                                    <div class="post-content">
+
+                                        <div class="post-meta">
+                                            <a href="{% url 'blog:blog_detail' blog.slug %}"
+                                               class="post-author">{{ blog.create_date|date:"M d, Y" }}</a>
+                                            <a href="{% url 'blog:blog_detail' blog.slug %}"
+                                               class="post-tutorial">{{ blog.author.name }}</a>
+                                        </div>
+                                        <a href="{% url 'blog:blog_detail' blog.slug %}"
+                                           class="post-title">{{ blog.name|slice:'70' }}...</a>
+                                    </div>
                                 </div>
-                            </div>
-                                	
-                                {% endfor %}
-                            
+
+                            {% endfor %}
+
                         </div>
 
                         <div class="single-widget-area mb-100 clearfix">
@@ -203,7 +184,7 @@
 
                             <ul class="popular-tags">
                                 {% for tag in tags %}
-                                	<li><a href="{% url 'blog:blog_list' %}?tag={{ tag.name }}">{{ tag.name }},</a></li>
+                                    <li><a href="{% url 'blog:blog_list' %}?tag={{ tag.name }}">{{ tag.name }},</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
