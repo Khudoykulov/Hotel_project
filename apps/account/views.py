@@ -21,9 +21,10 @@ class RegisterView(View):
 
     def post(self, request, *args, **kwargs):
         form = USerRegister(data=request.POST, files=request.FILES)
+        print(form.errors)
+        print(form.is_valid())
         if form.is_valid():
             user = form.save()
-            print('...............................................................................')
             if request.FILES:
                 Profile.objects.create(user_id=user.id, picture=request.FILES.get('image'))
                 messages.success(request, 'Successfully registered')
