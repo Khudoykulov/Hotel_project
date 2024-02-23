@@ -4,23 +4,23 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.views import auth_logout
 from django.views.generic import CreateView, TemplateView, View
-from .form import USerRegister
+from .form import USerRegisterForm
 from .models import Profile
 
 
 class RegisterView(View):
-    form_class = USerRegister
+    form_class = USerRegisterForm
     template_name = 'account/register.html'
 
     def get(self, request, *args, **kwargs):
-        form = USerRegister()
+        form = USerRegisterForm()
         context = {
             'form': form
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = USerRegister(data=request.POST, files=request.FILES)
+        form = USerRegisterForm(data=request.POST, files=request.FILES)
         print(form.errors)
         print(form.is_valid())
         if form.is_valid():

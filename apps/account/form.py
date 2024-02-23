@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.contrib.auth.models import User
 
 
-class USerRegister(UserCreationForm):
+class USerRegisterForm(UserCreationForm):
     image = forms.ImageField(required=False)
 
     class Meta:
