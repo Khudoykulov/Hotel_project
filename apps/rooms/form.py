@@ -11,15 +11,15 @@ class RoomForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RoomForm, self).__init__(*args, **kwargs)
         self.fields['check_in'].widget.attrs.update({
-            'class': 'input-small form-control',
+            'class': 'form-control',
             'placeholder': 'Check In',
-            'name': 'checkInDate',
+            'name': 'check_in',
             'id': 'checkInDate',
         })
         self.fields['check_out'].widget.attrs.update({
-            'class': 'input-small form-control',
+            'class': 'form-control',
             'placeholder': 'Check Out',
-            'name': 'checkOutDate',
+            'name': 'check_out',
             'id': 'checkOutDate'
         })
         self.fields['adults'].widget.attrs.update({
@@ -31,10 +31,4 @@ class RoomForm(forms.ModelForm):
             'class': 'form-control',
             'id': 'children',
             'name': 'children'
-        })
-        self.fields['price_min'].widget.attrs.update({
-
-        })
-        self.fields['price_max'].widget.attrs.update({
-
         })

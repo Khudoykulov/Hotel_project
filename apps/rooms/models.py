@@ -14,7 +14,7 @@ class Room(BaseModel):
     size_b = models.IntegerField()
     bed = models.CharField(max_length=123, null=True, blank=True)
     slug = models.SlugField(unique=True, null=True, blank=True)
-    # room_number1 = models.IntegerField()
+    room_number1 = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -56,7 +56,7 @@ class Booking(BaseModel):
 
 def blog_pre_save(sender, instance, *args, **kwargs):
     if not instance.slug:
-        instance.slug = slugify(instance.name + " - " + timezone.now().date().strftime('%Y-%m-%d %H:%M:%S.%f'))
+        instance.slug = slugify(instance.name + " - " + timezone.now().strftime('%Y-%m-%d %H:%M:%S.%f'))
 
 
 pre_save.connect(blog_pre_save, sender=Room)

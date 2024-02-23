@@ -39,26 +39,8 @@
                                 <li class="active"><a href="{% url 'main:home' %}">Home</a></li>
                                 <li><a href="{% url 'rooms:rooms_list' %}">Rooms</a></li>
                                 <li><a href="{% url 'main:about' %}">About Us</a></li>
-                                <li><a href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="{% url 'main:home' %}">- Home</a></li>
-                                        <li><a href="{% url 'rooms:rooms_list' %}">- Rooms</a></li>
-                                        <li><a href="{% url 'main:about' %}">- About Us</a></li>
-                                        <li><a href="{% url 'blog:blog_list' %}">- Blog_list</a></li>
-                                        <li><a href="{% url 'services:services_list' %}">- Services</a></li>
-                                        <li><a href="{% url 'main:contact' %}">- Contact</a></li>
-                                        {#                                            <li><a href="#">- Dropdown</a>#}
-                                        {#                                                <ul class="dropdown">#}
-                                        {#                                                    <li><a href="#">- Dropdown Item</a></li>#}
-                                        {#                                                    <li><a href="#">- Dropdown Item</a></li>#}
-                                        {#                                                    <li><a href="#">- Dropdown Item</a></li>#}
-                                        {#                                                    <li><a href="#">- Dropdown Item</a></li>#}
-                                        {#                                                </ul>#}
-                                        {#                                            </li>#}
-                                    </ul>
-                                </li>
-                                {#                                    <li><a href="{% url 'account:register' %}">Se</a></li>#}
-                                {#                                    ../blog/blog.html#}
+                                <li><a href="{% url 'blog:blog_list' %}">Blog_list</a></li>
+                                <li><a href="{% url 'services:services_list' %}">Services</a></li>
                                 <li><a href="{% url 'main:contact' %}">Contact</a></li>
                             </ul>
 
@@ -69,9 +51,11 @@
                             <div class="ml-15"><a href="#">{{ request.user.username }}</a></div>
 
                             <div class=" ml-4">
-                                <a href="{% url 'account:login' %}">Login<i class="fa fa-user" aria-hidden="true"></i></a>
+                                <a href="{% url 'account:login' %}">Login<i class="fa fa-user"
+                                                                            aria-hidden="true"></i></a>
                                 <span>| </span>
-                                <a href="{% url 'account:logout' %}">Log Out<i class="fa fa-user" aria-hidden="true"></i></a>
+                                <a href="{% url 'account:logout' %}">Log Out<i class="fa fa-user"
+                                                                               aria-hidden="true"></i></a>
                             </div>
                         </div>
 
