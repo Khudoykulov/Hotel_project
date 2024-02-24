@@ -2477,3 +2477,18 @@ html .ui-button.ui-state-disabled:active {
       margin-bottom: 0; }
 
 /*# sourceMappingURL=style.css.map */
+
+.message_success {
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    background: rgba(39, 255, 135, 1.0);
+    border: 6px solid #d0d0d0;
+    border-radius: 15px;
+    line-height: 0.6;
+}
+
+.message_success h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000 !important;
+}

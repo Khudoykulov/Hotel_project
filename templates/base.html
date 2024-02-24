@@ -70,8 +70,13 @@
     ;</script>
 </head>
 <body>
+{% if messages %}
+	{% include 'messages.html' %}
+    
+{% else %}
+    {% include 'navbar.html' %}
+{% endif %} 
 
-{% include 'navbar.html' %}
 {% block content %}
 
 

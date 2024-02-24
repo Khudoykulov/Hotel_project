@@ -1,14 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 from .models import ServicesPost, Category
 from .form import Comments, CommentForm
 from django.contrib import messages
 
 
-class ServicesListView(TemplateView):
+class ServicesListView(ListView):
+    paginate_by = 3
+    queryset = ServicesPost.objects.all()
     def get_context_data(self, **kwargs):
         cnt = super().get_context_data(**kwargs)
-        cnt['services_list'] = ServicesPost.objects.order_by('-id')
         cnt['services_3'] = ServicesPost.objects.order_by('-id')[:3]
         cnt['categories'] = Category.objects.all()
         return cnt

@@ -27,14 +27,15 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
 
-                    {% for object in services_list %}
+                    {% for object in object_list %}
 
                         <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp"
                              data-wow-delay="200ms">
 
                             <div class="post-thumbnail">
-                                <a href="{% url 'services:service_detail' object.slug %}"><img src="{{ object.image.url }}"
-                                                                                        alt></a>
+                                <a href="{% url 'services:service_detail' object.slug %}"><img
+                                        src="{{ object.image.url }}"
+                                        alt></a>
                             </div>
 
                             <div class="post-content">
@@ -58,34 +59,30 @@
                             </div>
                         </div>
                     {% endfor %}
-
-
+                
                     <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next <i
-                                    class="fa fa-angle-right"></i></a>
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous <i
+                                        class="fa fa-angle-left"></i></a>
+                            {% endif %}
+                            {% for page in page_obj.paginator.page_range %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next <i
+                                        class="fa fa-angle-right"></i></a>
+                            {% endif %}
                             </li>
                         </ul>
                     </nav>
+
+
                 </div>
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4">
                     <div class="roberto-sidebar-area pl-md-4">
-
-                        <div class="single-widget-area mb-100">
-                            <div class="newsletter-form">
-                                <h5>Newsletter</h5>
-                                <p>Subscribe our newsletter gor get notification new updates.</p>
-                                <form action="#" method="post">
-                                    <input type="email" name="nl-email" id="nlEmail" class="form-control"
-                                           placeholder="Enter your email...">
-                                    <button type="submit" class="btn roberto-btn w-100">Subscribe</button>
-                                </form>
-                            </div>
-                        </div>
-
                         <div class="single-widget-area mb-100">
                             <h4 class="widget-title mb-30">Recent News</h4>
 
@@ -105,7 +102,8 @@
                                             <a href="{% url 'services:service_detail' object.slug %}"
                                                class="post-tutorial">service</a>
                                         </div>
-                                        <a href="{% url 'services:service_detail' object.slug %}" class="post-title">{{ object.name }}</a>
+                                        <a href="{% url 'services:service_detail' object.slug %}"
+                                           class="post-title">{{ object.name }}</a>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -116,7 +114,9 @@
 
                             <ul class="popular-tags">
                                 {% for category in categories %}
-                                    <li><a href="{% url 'services:services_list' %}?category={{ category.name }}">{{ category.name }},</a></li>
+                                    <li>
+                                        <a href="{% url 'services:services_list' %}?category={{ category.name }}">{{ category.name }},</a>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </div>

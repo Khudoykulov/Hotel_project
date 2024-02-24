@@ -53,16 +53,28 @@
                         </div>
 
                     {% endfor %}
-                    <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="1000ms">
+                
+                
+                    <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next <i
-                                    class="fa fa-angle-right"></i></a>
+                            {% if object_list.has_previous %}
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous <i
+                                        class="fa fa-angle-left"></i></a>
+                            {% endif %}
+                            {% for page in object_list.paginator.page_range %}
+                                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                            {% endfor %}
+                            {% if object_list.has_next %}
+                                <li class="page-item">
+                                <a class="page-link" href="?page={{ object_list.next_page_number }}">Next <i
+                                        class="fa fa-angle-right"></i></a>
+                            {% endif %}
                             </li>
                         </ul>
                     </nav>
+                
+                
                 </div>
                 <div class="col-12 col-lg-4">
 

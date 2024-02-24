@@ -9,7 +9,13 @@ from .form import CommentForm
 
 class BlogListView(ListView):
     queryset = BlogPost.objects.all()
+    paginate_by = 3
     template_name = 'blog/blog.html'
+    # def get(self, request, *args, **kwargs):
+    #     ctx = self.get_context_data(**kwargs)
+    #     ctx['object_list'] = request.GET.get('tag')
+    #     return ctx
+    #
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
