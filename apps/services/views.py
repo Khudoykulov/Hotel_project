@@ -1,20 +1,33 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, DetailView, ListView
+from django.views.generic import TemplateView, DetailView, ListView, View
 from .models import ServicesPost, Category
 from .form import Comments, CommentForm
 from django.contrib import messages
 
+from ..main.models import Services
 
-class ServicesListView(ListView):
-    paginate_by = 3
-    queryset = ServicesPost.objects.all()
-    def get_context_data(self, **kwargs):
-        cnt = super().get_context_data(**kwargs)
-        cnt['services_3'] = ServicesPost.objects.order_by('-id')[:3]
-        cnt['categories'] = Category.objects.all()
-        return cnt
 
+class ServicesListView(View):
     template_name = 'services/service_list.html'
+
+    def get(self, request, *args, **kwargs):
+        services = ServicesPost.objects.order_by('-id')
+        services_3 = ServicesPost.objects.order_by('-id')[:3]
+        categories = Category.objects.all()
+        category = self.request.GET.get('category')
+        if category:
+            services = services.filter(category__name__exact=category)
+        paginator = Paginator(services, 3)
+        page = self.request.GET.get('page')
+        services = paginator.get_page(page)
+        ctx = {
+            'object_list': services,
+            'services_3': services_3,
+            'categories': categories
+        }
+        return render(request, self.template_name, ctx)
+
 
 
 def service_detail(request, slug):

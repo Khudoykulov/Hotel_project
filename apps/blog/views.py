@@ -1,36 +1,39 @@
 from urllib import request
 
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import BlogPost, Tag, Comments
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, View
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from .form import CommentForm
 
 
-class BlogListView(ListView):
-    queryset = BlogPost.objects.all()
-    paginate_by = 3
+class BlogListView(View):
     template_name = 'blog/blog.html'
-    # def get(self, request, *args, **kwargs):
-    #     ctx = self.get_context_data(**kwargs)
-    #     ctx['object_list'] = request.GET.get('tag')
-    #     return ctx
-    #
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['object_3'] = BlogPost.objects.order_by('-id')[:3]
-        ctx['tags'] = Tag.objects.all()
-        return ctx
+    def get(self, request, *args, **kwargs):
+        posts = BlogPost.objects.all()
+        tag = request.GET.get('tag')
+        if tag:
+            posts = BlogPost.objects.filter(tags__name__exact=tag)
+        paginator = Paginator(posts, 3)
+        page = request.GET.get('page')
+        posts = paginator.get_page(page)
+        object_3 = BlogPost.objects.order_by('-id')[:3]
+        tags = Tag.objects.all()
+        ctx = {
+            'object_list': posts,
+            'object_3': object_3,
+            'tags': tags
+
+        }
+        return render(request, 'blog/blog.html', ctx)
 
 
 def blogdetail(request, slug):
     blogs = BlogPost.objects.order_by('-id')[:3]
     blog = get_object_or_404(BlogPost, slug=slug)
-    # print(blog.author.picture.url)
-    # print(blog.author.user.username)
     tags = Tag.objects.all()
     comments = Comments.objects.filter(blog=blog, parent__isnull=True).order_by('-id')
     form = CommentForm()
