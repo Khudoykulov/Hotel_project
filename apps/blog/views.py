@@ -1,7 +1,7 @@
 from urllib import request
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import BlogPost, Tag, Comments, BlogLike
+from .models import BlogPost, Tag, Comments
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, View
 from django.contrib import messages
@@ -61,18 +61,3 @@ def blogdetail(request, slug):
     return render(request, 'blog/single-blog.html', context)
 
 
-class LikeRedirectView(LoginRequiredMixin, View):
-    login_url = reverse_lazy('account:login')
-
-    def get(self, request, *args, **kwargs):
-        id_lake = self.kwargs.get('id_lake')
-        path = request.GET.get('next')
-        # print(request.user.bloglike_set)
-        # if request.user.bloglike_set.filter(blog_id=id_lake).exists():
-        #     print('ccccccccccccccccccccccccccccccccccc')
-        #     request.user.bloglike_set.filter(blog_id=id_lake).delete()
-        #     messages.success(request, 'disliked')
-        # else:
-        #     BlogLike.objects.create(author_id=request.user.id, episode_id=id_lake)
-        #     messages.success(request, 'liked')
-        return redirect(path)

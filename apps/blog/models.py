@@ -34,11 +34,6 @@ class BlogPost(BaseModel):
         return self.name
 
 
-class BlogLike(models.Model):
-    blog = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='likes')
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-
-
 class Content(BaseModel):
     blog = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='content',)
     content = RichTextField()

@@ -5,7 +5,6 @@ from .models import (
      Content,
      Comments,
      Tag,
-     BlogLike
 )
 
 
@@ -43,10 +42,3 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     search_fields = ('name',)
     list_display_links = ('id', 'name')
-
-
-@admin.register(BlogLike)
-class BlogLikeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'blog', 'author', )
-    autocomplete_fields = ('blog', 'author', )
-    search_fields = ('blog',)
