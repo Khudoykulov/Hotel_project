@@ -85,15 +85,23 @@
                                         <div class="comment-author">
                                             <img src="
 
-                                                    {% if request.user.is_authenticated and request.user.image%}{{ request.user.image.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
+                                                    {% if request.user.is_authenticated %}{{ comment.author_comment.user.username }}///{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
                                                  alt="Image placeholder">
                                         </div>
 
                                         <div class="comment-meta">
                                             <a href="#"
                                                class="post-date">{{ comment.created_date|date:"F d, Y \a\t h:i a" }}</a>
-                                            <h5>{{ comment.name }}</h5>
+                                            <h5>{{ comment.name }}{{ comment.author_comment.user.username }}</h5>
                                             <p>{{ comment.message }}</p>
+                                            <a href="{% url 'blog:comment_like' comment.id %}?next={{ request.path }}"
+                                               class="like">
+{#                                                {% if object.id|user_comment_likes:request.user %}#}
+{#                                                    Dislike#}
+{#                                                {% else %}#}
+{#                                                    Like#}
+{#                                                {% endif %}#}
+                                            </a>
                                             <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
                                         </div>
                                     </div>
@@ -106,16 +114,17 @@
 
                                             <div class="comment-author">
                                                 <img src="
-                                                        {% if request.user.is_authenticated and request.user.image %}{{ request.user.image.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
+
+                                                        {% if comment.author.picture %}{{ comment.author.picture.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{{ comment.author.picture.url }}{% endif %}"
                                                      alt="Image placeholder">
                                             </div>
-                                        <div class="comment-meta">
-                                            <a href="#"
-                                               class="post-date">{{ children.created_date|date:"F d, Y \a\t h:i a" }}</a>
-                                            <h5>{{ children.name }}</h5>
-                                            <p>{{ children.message }}</p>
-                                            <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
-                                        </div>
+                                            <div class="comment-meta">
+                                                <a href="#"
+                                                   class="post-date">{{ children.created_date|date:"F d, Y \a\t h:i a" }}</a>
+                                                <h5>{{ children.name }}{{ comment.author.picture.url }}</h5>
+                                                <p>{{ children.message }}</p>
+                                                <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
+                                            </div>
                                         </div>
                                     </li>
                                 </ol>
@@ -132,13 +141,13 @@
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-12">
-{#                                    <input type="text" name="message-name" class="form-control mb-30"#}
-{#                                           placeholder="Your Name">#}
+                                    {#                                    <input type="text" name="message-name" class="form-control mb-30"#}
+                                    {#                                           placeholder="Your Name">#}
                                     {{ form.name }}
                                 </div>
                                 <div class="col-12">
-{#                                <textarea name="message" class="form-control mb-30"#}
-{#                                          placeholder="Start the discussion..."></textarea>#}
+                                    {#                                <textarea name="message" class="form-control mb-30"#}
+                                    {#                                          placeholder="Start the discussion..."></textarea>#}
                                     {{ form.message }}
                                 </div>
                                 <div class="col-12">

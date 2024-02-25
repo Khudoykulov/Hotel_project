@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from apps.rooms.models import Room, Image, Booking
@@ -6,6 +5,7 @@ from .form import RoomForm
 from django.core.paginator import Paginator
 from datetime import datetime
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 
 def room_list(request):

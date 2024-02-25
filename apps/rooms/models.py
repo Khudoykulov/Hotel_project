@@ -1,4 +1,5 @@
 from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
 from django.db import models
 from apps.main.models import BaseModel
 from django.utils.text import slugify
@@ -38,6 +39,7 @@ class RoomService(BaseModel):
 
 
 class Booking(BaseModel):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author', null=True, blank=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True, related_name='rooms_booking')
     check_in = models.DateField(null=True, blank=True)
     check_out = models.DateField(null=True, blank=True)
