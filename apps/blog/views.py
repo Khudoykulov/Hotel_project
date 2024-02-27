@@ -42,15 +42,11 @@ def blogdetail(request, slug):
         form = CommentForm(request.POST, files=request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
-
             obj.blog = blog
-            print(obj.author)
-            print('///')
-            print(request.user.id)
             obj.author_id = request.user.id
             if cid:
                 obj.parent_id = cid
-            form.save()
+            obj.save()
             messages.success(request, 'You have successfully commentary')
             return redirect(f'.#comment-{obj.id}')
     context = {
@@ -58,7 +54,7 @@ def blogdetail(request, slug):
         'blogs': blogs,
         'tags': tags,
         'form': form,
-        'comments': comments
+        'comments': comments,
 
     }
     return render(request, 'blog/single-blog.html', context)

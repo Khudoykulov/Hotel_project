@@ -83,9 +83,7 @@
                                     <div class="comment-content d-flex">
 
                                         <div class="comment-author">
-                                            <img src="
-
-                                                    {% if request.user.is_authenticated %}{{ comment.author_comment.user.username }}///{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
+                                            <img src="{% if request.user.profile.picture %}{{ request.user.profile.picture.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
                                                  alt="Image placeholder">
                                         </div>
 
@@ -106,8 +104,7 @@
 
                                             <div class="comment-author">
                                                 <img src="
-
-                                                        {% if comment.author.picture %}{{ comment.author.picture.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{{ comment.author.picture.url }}{% endif %}"
+                                                        {% if request.user.profile.picture %}{{ request.user.profile.picture.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
                                                      alt="Image placeholder">
                                             </div>
                                             <div class="comment-meta">

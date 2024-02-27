@@ -32,8 +32,8 @@ class RoomService(admin.ModelAdmin):
 
 @admin.register(Booking)
 class Booking(admin.ModelAdmin):
-    fields = ('room', 'check_in', 'check_out',)
-    list_display = ('room', 'check_in', 'check_out',)
+    fields = ('author', 'room', 'check_in', 'check_out',)
+    list_display = ('author', 'room', 'check_in', 'check_out',)
     search_fields = ('price_min', 'price_max',)
     list_display_links = ('room', 'check_in', 'check_out',)
 

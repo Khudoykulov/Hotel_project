@@ -41,7 +41,7 @@ class Content(BaseModel):
 
 
 class Comments(BaseModel):
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='author_comment', null=True, blank=True)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
     top_level_comment_id = models.IntegerField(null=True, blank=True)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True,)
     blog = models.ForeignKey(BlogPost, on_delete=models.SET_NULL, null=True, blank=True, related_name='comments')

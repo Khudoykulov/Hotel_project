@@ -19,9 +19,9 @@ def room_list(request):
     room_number = request.GET.get('room_number')
     if check_in and check_out:
         rooms = rooms.filter(~Q(rooms_booking__check_in__lte=check_out) | ~Q(rooms_booking__check_out__gte=check_in))
-        if room_number:
-            rooms = rooms.filter(Q(room_number1=room_number))
-        if int(max_adults) != 0 or int(max_children) != 0 or room_number:
+        if int(room_number) != 0:
+            rooms = rooms.filter(Q(room_number1__exact=room_number))
+        if int(max_adults) != 0 or int(max_children) != 0:
             rooms_max_person = rooms.filter(Q(max_person=int(max_adults)+int(max_children)))
             rooms = rooms.intersection(rooms_max_person)
         messages.info(request, f'numbers of rooms fount {rooms.count()}')
@@ -47,11 +47,11 @@ def room_detail(request, slug):
         }
         farq = abs((datetime.strptime(check_out, '%Y-%m-%d') - datetime.strptime(check_in, '%Y-%m-%d')).days)
         ctx['farq'] = farq
-        print(farq)
         form = RoomForm(data)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.room = room
+            obj.author_id = request.user.id
             form.save()
             messages.success(request, f'You booked the room for {farq} days and the total price $={farq*room.price}')
             return redirect('.')
