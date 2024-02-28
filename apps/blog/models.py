@@ -55,6 +55,11 @@ class Comments(BaseModel):
         return None
 
 
+class EpisodeLike(models.Model):
+    episode = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='likes')
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+
+
 def blog_pre_save(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(instance.name + " - " + timezone.now().strftime('%Y-%m-%d %H:%M:%S.%f'))
