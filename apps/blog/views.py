@@ -45,7 +45,7 @@ def blogdetail(request, slug):
         if form.is_valid():
             obj = form.save(commit=False)
             obj.blog = blog
-            obj.author_id = request.user.id
+            obj.author = request.user
             if cid:
                 obj.parent_id = cid
             obj.save()

@@ -70,9 +70,6 @@ class LikeRedirectView(LoginRequiredMixin, View):
             request.user.servicelike_set.filter(blog_id=eid).delete()
             messages.success(request, 'disliked')
         else:
-            print(ServiceLike.objects.filter(blog_id=eid),'//////')
-            print(ServiceLike.objects.filter(author_id=request.user))
-            print('/////////////////////////////')
             ServiceLike.objects.create(author_id=request.user.id, blog_id=eid)
             messages.success(request, 'liked')
         return redirect(path)

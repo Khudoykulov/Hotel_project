@@ -22,7 +22,7 @@ class ContentAdminInline(admin.TabularInline):
 
 
 class CommentsInline(admin.TabularInline):
-    fields = ('id', 'name', 'message')
+    fields = ('id', 'author.username', 'message')
     model = Comments
     extra = 0
 

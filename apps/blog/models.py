@@ -49,7 +49,7 @@ class Comments(BaseModel):
     message = models.TextField()
 
     def __str__(self):
-        return self.name
+        return self.message
 
     @property
     def children(self):
