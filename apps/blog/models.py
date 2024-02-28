@@ -48,6 +48,9 @@ class Comments(BaseModel):
     name = models.CharField(max_length=123)
     message = models.TextField()
 
+    def __str__(self):
+        return self.name
+
     @property
     def children(self):
         if not self.top_level_comment_id:
@@ -55,8 +58,8 @@ class Comments(BaseModel):
         return None
 
 
-class EpisodeLike(models.Model):
-    episode = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='likes')
+class BlogLike(models.Model):
+    blog = models.ForeignKey(Comments, on_delete=models.CASCADE, related_name='likes')
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
 

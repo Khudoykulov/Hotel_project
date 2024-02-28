@@ -1,12 +1,14 @@
 from urllib import request
 
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import BlogPost, Tag, Comments
+from .models import BlogPost, Tag, Comments, BlogLike
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, View
 from django.contrib import messages
 from .form import CommentForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class BlogListView(View):
@@ -58,5 +60,20 @@ def blogdetail(request, slug):
 
     }
     return render(request, 'blog/single-blog.html', context)
+
+
+class LikeRedirectView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('account:login')
+
+    def get(self, request, *args, **kwargs):
+        eid = self.kwargs.get('eid')
+        path = request.GET.get('next')
+        if request.user.bloglike_set.filter(blog_id=eid).exists():
+            request.user.bloglike_set.filter(blog_id=eid).delete()
+            messages.success(request, 'disliked')
+        else:
+            BlogLike.objects.create(author_id=request.user.id, blog_id=eid)
+            messages.success(request, 'liked')
+        return redirect(path)
 
 

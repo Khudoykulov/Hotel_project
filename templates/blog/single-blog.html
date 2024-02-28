@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load like %}
 {% block content %}
+
 
     <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url({{ blog.image.url }});">
         <div class="container h-100">
@@ -83,7 +85,9 @@
                                     <div class="comment-content d-flex">
 
                                         <div class="comment-author">
-                                            <img src="{% if request.user.profile.picture %}{{ comment.author.picture.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
+                                            <img src="
+                                                    
+                                                    {% if request.user.profile.picture %}{{ comment.author.picture.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
                                                  alt="Image placeholder">
                                         </div>
 
@@ -92,6 +96,16 @@
                                                class="post-date">{{ comment.created_date|date:"F d, Y \a\t h:i a" }}</a>
                                             <h5>{{ comment.name }}{{ comment.author_comment.user.username }}</h5>
                                             <p>{{ comment.message }}</p>
+                                            <a href="{% url 'blog:comment_lake' comment.id %}?next={{ request.path }}"
+                                               class="like">
+                                                {% if comment.id|user_likes_blog:request.user %}
+                                                    Dislike {% if comment.likes.count > 0 %} (
+                                                    {{ comment.likes.count }}){% endif %}
+                                                {% else %}
+                                                    Like {% if comment.likes.count > 0 %}({{ comment.likes.count }})
+                                                {% endif %}
+                                                {% endif %}
+                                            </a>
                                             <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
                                         </div>
                                     </div>
@@ -104,6 +118,8 @@
 
                                             <div class="comment-author">
                                                 <img src="
+
+                                                        
                                                         {% if request.user.profile.picture %}{{ request.user.profile.picture.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
                                                      alt="Image placeholder">
                                             </div>
@@ -112,6 +128,16 @@
                                                    class="post-date">{{ children.created_date|date:"F d, Y \a\t h:i a" }}</a>
                                                 <h5>{{ children.name }}</h5>
                                                 <p>{{ children.message }}</p>
+                                                <a href="{% url 'blog:comment_lake' children.id %}?next={{ request.path }}"
+                                                   class="like">
+                                                    {% if children.id|user_likes_blog:request.user %}
+                                                        Dislike {% if children.likes.count > 0 %} (
+                                                        {{ children.likes.count }}){% endif %}
+                                                    {% else %}
+                                                        Like {% if children.likes.count > 0 %}(
+                                                        {{ children.likes.count }}){% endif %}
+                                                    {% endif %}
+                                                </a>
                                                 <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
                                             </div>
                                         </div>
