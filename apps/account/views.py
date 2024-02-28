@@ -27,7 +27,7 @@ class RegisterView(View):
             user = form.save()
             if request.FILES:
                 Profile.objects.create(user_id=user.id, picture=request.FILES.get('image'))
-                messages.success(request, 'Successfully registered')
+            messages.success(request, 'Successfully registered')
         return redirect(reverse_lazy('account:login'))
 
 

@@ -4,6 +4,7 @@ from .models import (
      Content,
      Category,
      Tag,
+    ServiceLike
 )
 
 
@@ -36,3 +37,8 @@ class TagAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_display_links = ('id', 'name')
 
+@admin.register(ServiceLike)
+class EpisodeLikeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'blog', 'author', )
+    autocomplete_fields = ('author',)
+    search_fields = ('blog', )

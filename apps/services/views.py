@@ -1,9 +1,11 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView, DetailView, ListView, View
-from .models import ServicesPost, Category
+from .models import ServicesPost, Category, ServiceLike
 from .form import Comments, CommentForm
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 from ..main.models import Services
 
@@ -29,7 +31,6 @@ class ServicesListView(View):
         return render(request, self.template_name, ctx)
 
 
-
 def service_detail(request, slug):
     service_3 = ServicesPost.objects.order_by('-id')[:3]
     blog = get_object_or_404(ServicesPost, slug=slug)
@@ -42,9 +43,10 @@ def service_detail(request, slug):
         if form.is_valid():
             obj = form.save(commit=False)
             obj.blog = blog
+            obj.author = request.user
             if cid:
                 obj.parent_id = cid
-            form.save()
+            obj.save()
             messages.success(request, 'You have successfully commentary')
             return redirect(f'.#comment-{obj.id}')
     context = {
@@ -56,3 +58,21 @@ def service_detail(request, slug):
 
     }
     return render(request, 'services/service_detail.html', context)
+
+
+class LikeRedirectView(LoginRequiredMixin, View):
+    login_url = reverse_lazy('account:login')
+
+    def get(self, request, *args, **kwargs):
+        eid = self.kwargs.get('eid')
+        path = request.GET.get('next')
+        if request.user.servicelike_set.filter(blog_id=eid).exists():
+            request.user.servicelike_set.filter(blog_id=eid).delete()
+            messages.success(request, 'disliked')
+        else:
+            print(ServiceLike.objects.filter(blog_id=eid),'//////')
+            print(ServiceLike.objects.filter(author_id=request.user))
+            print('/////////////////////////////')
+            ServiceLike.objects.create(author_id=request.user.id, blog_id=eid)
+            messages.success(request, 'liked')
+        return redirect(path)

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load like_service %}
 {% block content %}
 
     <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url({{ blog.image.url }});">
@@ -54,7 +55,9 @@
                     <div class="post-author-area d-flex align-items-center justify-content-between mb-50">
                         <ul class="popular-tags">
                             {% for category in blog.category.all %}
-                                <li><a href="{% url 'services:services_list' %}?category{{ category.name }}">{{ category.name }},</a></li>
+                                <li>
+                                    <a href="{% url 'services:services_list' %}?category{{ category.name }}">{{ category.name }},</a>
+                                </li>
                             {% endfor %}
                         </ul>
 
@@ -84,16 +87,25 @@
 
                                         <div class="comment-author">
                                             <img src="
-
-                                                    {% if request.user.is_authenticated and request.user.image%}{{ request.user.image.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
+                                                    {% if comment.author.profile.picture %}{{ comment.author.profile.picture.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
                                                  alt="Image placeholder">
                                         </div>
 
                                         <div class="comment-meta">
                                             <a href="#"
-                                               class="post-date">{{ comment.created_date|date:"F d, Y \a\t h:i a" }}</a>
-                                            <h5>{{ comment.name }}</h5>
+                                               class="post-date">{{ comment.create_date|date:"d F, Y" }}</a>
+                                            <h5>{{ comment.author.username }}</h5>
                                             <p>{{ comment.message }}</p>
+                                            <a href="{% url 'services:comment_lake' comment.id %}?next={{ request.path }}"
+                                               class="like">
+                                                {% if comment.id|user_likes_blog:request.user %}
+                                                    Dislike {% if comment.likes.count > 0 %} (
+                                                    {{ comment.likes.count }}){% endif %}
+                                                {% else %}
+                                                    Like {% if comment.likes.count > 0 %}({{ comment.likes.count }})
+                                                {% endif %}
+                                                {% endif %}
+                                            </a>
                                             <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
                                         </div>
                                     </div>
@@ -106,16 +118,28 @@
 
                                             <div class="comment-author">
                                                 <img src="
-                                                        {% if request.user.is_authenticated and request.user.image %}{{ request.user.image.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
+                                                        
+                                                        {% if children.author.profile.picture %}{{ children.author.profile.picture.url }}{% else %}{% static 'img/73-739007_icon-profile-picture-circle-png.png' %}{% endif %}"
                                                      alt="Image placeholder">
                                             </div>
-                                        <div class="comment-meta">
-                                            <a href="#"
-                                               class="post-date">{{ children.created_date|date:"F d, Y \a\t h:i a" }}</a>
-                                            <h5>{{ children.name }}</h5>
-                                            <p>{{ children.message }}</p>
-                                            <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
-                                        </div>
+                                            <div class="comment-meta">
+                                                <a href="#"
+                                                   class="post-date">{{ children.create_date|date:"d F, Y" }}</a>
+                                                <h5>{{ children.author.username }}</h5>
+                                                <p>{{ children.message }}</p>
+                                                <a href="{% url 'services:comment_lake' children.id %}?next={{ request.path }}"
+                                                   class="like">
+                                                    {% if children.id|user_likes_blog:request.user %}
+                                                        Dislike {% if children.likes.count > 0 %} (
+                                                        {{ children.likes.count }}){% endif %}
+                                                    {% else %}
+                                                        Like {% if children.likes.count > 0 %}(
+                                                        {{ children.likes.count }}){% endif %}
+                                                    {% endif %}
+                                                </a>
+
+                                                <a href="?cid={{ comment.id }}#form_id_comment" class="reply">Reply</a>
+                                            </div>
                                         </div>
                                     </li>
                                 </ol>
@@ -132,13 +156,8 @@
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-12">
-{#                                    <input type="text" name="message-name" class="form-control mb-30"#}
-{#                                           placeholder="Your Name">#}
-                                    {{ form.name }}
-                                </div>
-                                <div class="col-12">
-{#                                <textarea name="message" class="form-control mb-30"#}
-{#                                          placeholder="Start the discussion..."></textarea>#}
+                                    {#                                <textarea name="message" class="form-control mb-30"#}
+                                    {#                                          placeholder="Start the discussion..."></textarea>#}
                                     {{ form.message }}
                                 </div>
                                 <div class="col-12">
@@ -158,16 +177,20 @@
                                 <div class="single-recent-post d-flex">
 
                                     <div class="post-thumb">
-                                        <a href="{% url 'services:service_detail' blog.slug %}"><img src="{{ blog.image.url }}" alt></a>
+                                        <a href="{% url 'services:service_detail' blog.slug %}"><img
+                                                src="{{ blog.image.url }}" alt></a>
                                     </div>
 
                                     <div class="post-content">
 
                                         <div class="post-meta">
-                                            <a href="{% url 'services:service_detail' blog.slug %}" class="post-author">{{ blog.create_date|date:"M d, Y" }}</a>
-                                            <a href="{% url 'services:service_detail' blog.slug %}" class="post-tutorial">{{ blog.author.name }}</a>
+                                            <a href="{% url 'services:service_detail' blog.slug %}"
+                                               class="post-author">{{ blog.create_date|date:"M d, Y" }}</a>
+                                            <a href="{% url 'services:service_detail' blog.slug %}"
+                                               class="post-tutorial">{{ blog.author.name }}</a>
                                         </div>
-                                        <a href="{% url 'services:service_detail' blog.slug %}" class="post-title">{{ blog.name|slice:'70' }}...</a>
+                                        <a href="{% url 'services:service_detail' blog.slug %}"
+                                           class="post-title">{{ blog.name|slice:'70' }}...</a>
                                     </div>
                                 </div>
 
@@ -180,7 +203,9 @@
 
                             <ul class="popular-tags">
                                 {% for category in categories %}
-                                    <li><a href="{% url 'services:services_list' %}?category={{ category.name }}">{{ category.name }},</a></li>
+                                    <li>
+                                        <a href="{% url 'services:services_list' %}?category={{ category.name }}">{{ category.name }},</a>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </div>

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from ckeditor.fields import RichTextField
 from apps.main.models import BaseModel
@@ -38,17 +39,25 @@ class Content(BaseModel):
 
 
 class Comments(BaseModel):
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='author')
     top_level_comment_id = models.IntegerField(null=True, blank=True)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True,)
     blog = models.ForeignKey(ServicesPost, on_delete=models.SET_NULL, null=True, blank=True, related_name='comments')
     name = models.CharField(max_length=123)
     message = models.TextField()
 
+    def __str__(self):
+        return self .message
     @property
     def children(self):
         if not self.top_level_comment_id:
             return Comments.objects.filter(top_level_comment_id=self.id)
         return None
+
+
+class ServiceLike(models.Model):
+    blog = models.ForeignKey(Comments, on_delete=models.CASCADE, related_name='likes')
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
 
 def blog_pre_save(sender, instance, *args, **kwargs):
