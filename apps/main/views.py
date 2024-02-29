@@ -15,6 +15,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self,  **kwargs):
         cnt = super().get_context_data(**kwargs)
+        cnt['rooms'] = Room.objects.order_by('-id')[:3]
         cnt['services'] = Services.objects.all()
         cnt['blog_list'] = BlogPost.objects.order_by('-id')[:3]
         cnt['Services_all'] = ServicesPost.objects.order_by('-id')[:5]
