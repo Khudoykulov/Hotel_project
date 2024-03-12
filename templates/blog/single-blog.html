@@ -16,7 +16,7 @@
                                                                  aria-hidden="true"></i> {{ blog.create_date|date:"M d, Y" }}
                                 </a>
                                 <a href="#" class="post-author"><i class="fa fa-user"
-                                                                   aria-hidden="true"></i> {{ blog.author.name }}</a>
+                                                                   aria-hidden="true"></i> {{ blog.author.user.username }}</a>
                             </div>
                         </div>
                     </div>
@@ -185,7 +185,7 @@
                                             <a href="{% url 'blog:blog_detail' blog.slug %}"
                                                class="post-author">{{ blog.create_date|date:"M d, Y" }}</a>
                                             <a href="{% url 'blog:blog_detail' blog.slug %}"
-                                               class="post-tutorial">{{ blog.author.name }}</a>
+                                               class="post-tutorial">{{ blog.author.user.username }}</a>
                                         </div>
                                         <a href="{% url 'blog:blog_detail' blog.slug %}"
                                            class="post-title">{{ blog.name|slice:'70' }}...</a>

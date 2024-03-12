@@ -44,7 +44,7 @@
                                     <a href="{% url 'blog:blog_detail' object.slug %}"
                                        class="post-author">{{ object.create_date|date:"F d, Y" }}</a>
                                     <a href="{% url 'blog:blog_detail' object.slug %}"
-                                       class="post-tutorial">{{ object.author.name }}</a>
+                                       class="post-tutorial">{{ object.author.user.username }}</a>
                                 </div>
 
                                 <a href="{% url 'blog:blog_detail' object.slug %}"
@@ -98,7 +98,7 @@
                                             <a href="{% url 'blog:blog_detail' object.slug %}"
                                                class="post-author">{{ object.create_date|date:"M d, Y" }}</a>
                                             <a href="{% url 'blog:blog_detail' object.slug %}"
-                                               class="post-tutorial">{{ object.author.name }}</a>
+                                               class="post-tutorial">{{ object.author.user.username }}</a>
                                         </div>
                                         <a href="single-blog.html" class="post-title">{{ object.name }}</a>
                                     </div>

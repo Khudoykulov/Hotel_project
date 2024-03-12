@@ -224,7 +224,7 @@
                      style="background-image: url({{ room.room_image.first.image.url }});"></div>
 
                 <div class="room-content">
-                    <h2 data-animation="fadeInUp" data-delay="100ms">Premium King Room</h2>
+                    <h2 data-animation="fadeInUp" data-delay="100ms">{{ room.name }}</h2>
                     <h3 data-animation="fadeInUp" data-delay="300ms">{{ room.price }} <span>/ Day</span></h3>
                     <ul class="room-feature" data-animation="fadeInUp" data-delay="500ms">
                         <li><span><i class="fa fa-check"></i> Size</span> <span>: {{ room.size_a }} - {{ room.size_b}}</span></li>
